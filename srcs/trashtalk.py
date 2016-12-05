@@ -43,7 +43,7 @@ def parse_option():
 
 def main():
     options = parse_option()
-    trash = Trash(options)
+    trash = Trash()
     print(trash.trash_list)
 
 if __name__ == "__main__":
