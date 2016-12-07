@@ -19,19 +19,20 @@ class Trash():
             l = map(lambda x: Path(self.path + '/files/' + x), list_file)
         for i in l:
             try:
-                s = i.name + ['', '\t' + str(i.lstat().st_size)][bool(size)]
+                yield (i.name, ['', str(i.lstat().st_size)][bool(size)])
                 total += i.lstat().st_size
-                print(s)
             except Exception as e:
                 print(e, file=sys.stderr)
         if size:
-            print("Total:\t%d" % total)
+            yield ("Total: ", total)
 
     def clean(self, list_file=None, path=None):
         """ method to clean files from trash
         """
+        info = False
         if not path:
-            path = self.path + '/files'
+            info = True
+            path = self.path + '/files/'
         if not list_file:
             l = Path(path).iterdir()
         else:
@@ -43,6 +44,9 @@ class Trash():
                     i.rmdir()
                 else:
                     i.unlink()
+                if info:
+                    info = Path(self.path + "/info/" + i.name + ".trashinfo")
+                    info.unlink()
             except Exception as e:
                 print(e, file=sys.stderr)
 

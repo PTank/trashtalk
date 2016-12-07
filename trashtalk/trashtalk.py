@@ -70,12 +70,15 @@ def trashtalk():
             if not trash:
                 continue
             if options.p or (
-                    not options.l and not options.s and not options.clean):
+                    not options.l and not
+                    options.s and not options.clean
+                    and not options.rm):
                 if options.p:
                     print('%s: ' % trash[0], end='')
                 print("%s" % str(trash[1]))
             if options.l or options.s:
-                trash[1].list_files(options.files, options.s)
+                for i in trash[1].list_files(options.files, options.s):
+                    print("{0:20} {1:>16}".format(i[0], i[1]))
             if options.clean:
                 trash[1].clean(options.files)
             if options.rm:

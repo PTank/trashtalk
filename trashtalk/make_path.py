@@ -27,7 +27,7 @@ def get_media_trash(user, media=[]):
             if t.exists():
                 trashs.append((m.name, Trash(str(t))))
             else:
-                print("media " + m.name + "have no trash", file=sys.stderr)
+                print("media " + m.name + " have no trash", file=sys.stderr)
         else:
             print("no media name: " + m.name, file=sys.stderr)
     return trashs
