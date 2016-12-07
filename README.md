@@ -7,7 +7,7 @@
 
 ## install
 
-	python3 setup.py install
+	python setup.py install
 
 ### exemple
 
@@ -19,5 +19,6 @@
 ## todo
 
 * add test
-* add move to trash option
+* add method move to trash option
+* add method to untrash file with trashinfo
 * doc

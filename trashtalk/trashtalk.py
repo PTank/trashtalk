@@ -82,7 +82,7 @@ def trashtalk():
             if options.clean:
                 trash[1].clean(options.files)
             if options.rm:
-                print("options not actualy implented", file=sys.stderr)
+                print("option -rm not actualy implanted", file=sys.stderr)
 
 if __name__ == "__main__":
     trashtalk()
