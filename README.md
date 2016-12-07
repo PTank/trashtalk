@@ -1,5 +1,4 @@
-# TRASHTALK
-
+# TRASHTALK *beta*
 
 ## concept
 

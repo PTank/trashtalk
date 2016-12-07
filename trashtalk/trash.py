@@ -2,6 +2,7 @@ from __future__ import print_function
 from pathlib import Path
 import sys
 
+__all__ = ["Trash"]
 
 class Trash():
 

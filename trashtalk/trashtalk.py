@@ -4,14 +4,15 @@ import argparse
 from os import getlogin
 from pathlib import Path
 from trashtalk.make_path import get_media_trash, get_home_trash
-from trashtalk.__init__ import __version__
 import sys
 
+__all__ = ["trashtalk"]
 
 def parse_option():
     parser = argparse.ArgumentParser(
         description="Taking out your trash easily")
     # CLASSIC
+    from trashtalk.__init__ import __version__
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s: ' + __version__)
     parser.add_argument('--verbose', action='store_true')
