@@ -1,5 +1,7 @@
 # TRASHTALK *beta*
 
+[![Build Status](https://travis-ci.org/PTank/trashtalk.svg?branch=dev)](https://travis-ci.org/PTank/trashtalk)
+
 ## concept
 
 *script to simplify trash access*
