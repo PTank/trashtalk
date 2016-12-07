@@ -1,10 +1,11 @@
 #! /usr/bin/env python3
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import argparse
 from os import getlogin
 from pathlib import Path
 from trashtalk.make_path import get_media_trash, get_home_trash
 from trashtalk.__init__ import __version__
+import sys
 
 
 def parse_option():
@@ -77,6 +78,8 @@ def trashtalk():
                 trash[1].list_files(options.files, options.s)
             if options.clean:
                 trash[1].clean(options.files)
+            if options.rm:
+                print("options not actualy implented", file=sys.stderr)
 
 if __name__ == "__main__":
     trashtalk()
