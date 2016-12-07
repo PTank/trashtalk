@@ -1,4 +1,4 @@
-from trash import Trash
+from trashtalk.trash import Trash
 from pathlib import Path
 from pwd import getpwnam
 import sys

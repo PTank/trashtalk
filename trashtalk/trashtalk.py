@@ -3,7 +3,8 @@ from __future__ import print_function
 import argparse
 from os import getlogin
 from pathlib import Path
-from make_path import get_media_trash, get_home_trash
+from trashtalk.make_path import get_media_trash, get_home_trash
+from trashtalk.__init__ import __version__
 
 
 def parse_option():
@@ -11,7 +12,7 @@ def parse_option():
         description="Taking out your trash easily")
     # CLASSIC
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s: ' + "0.01")
+                        version='%(prog)s: ' + __version__)
     parser.add_argument('--verbose', action='store_true')
     # TRASH SELECTION
     selection = parser.add_argument_group('trash selection')
@@ -44,7 +45,7 @@ def parse_option():
     return parser.parse_args()
 
 
-def main():
+def trashtalk():
     trashs = []
     options = parse_option()
     if not options.u and not options.au:
@@ -69,11 +70,13 @@ def main():
                 continue
             if options.p or (
                     not options.l and not options.s and not options.clean):
-                print("%s: %s" % (trash[0], str(trash[1])))
+                if options.p:
+                    print('%s: ' % trash[0], end='')
+                print("%s" % str(trash[1]))
             if options.l or options.s:
                 trash[1].list_files(options.files, options.s)
             if options.clean:
                 trash[1].clean(options.files)
 
 if __name__ == "__main__":
-    main()
+    trashtalk()
