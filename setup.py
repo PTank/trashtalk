@@ -14,12 +14,18 @@ setup(
 
     packages=find_packages(),
 
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+
     description="simplify trash in command line",
     long_description=open('README.md').read(),
     url="https://github.com/PTank/trashtalk",
+
     install_requires=requires,
+
     include_package_data=True,
-    classifier=[
+
+    classifiers=[
         "Programming Language :: Python",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",

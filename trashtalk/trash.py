@@ -19,7 +19,7 @@ class Trash():
             l = map(lambda x: Path(self.path + '/files/' + x), list_file)
         for i in l:
             try:
-                yield (i.name, ['', str(i.lstat().st_size)][bool(size)])
+                yield (i.name, ['', i.lstat().st_size][bool(size)])
                 total += i.lstat().st_size
             except Exception as e:
                 print(e, file=sys.stderr)

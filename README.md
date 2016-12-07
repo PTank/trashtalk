@@ -18,7 +18,6 @@
 
 ## todo
 
-* add test
 * add method move to trash option
 * add method to untrash file with trashinfo
 * doc
