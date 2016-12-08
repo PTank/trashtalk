@@ -1,6 +1,6 @@
 # TRASHTALK *beta*
 
-[![Build Status](https://travis-ci.org/PTank/trashtalk.svg?branch=dev)](https://travis-ci.org/PTank/trashtalk)
+[![Build Status](https://travis-ci.org/PTank/trashtalk.svg?branch=dev)](https://travis-ci.org/PTank/trashtalk)[![Coverage Status](https://coveralls.io/repos/github/PTank/trashtalk/badge.svg?branch=master)](https://coveralls.io/github/PTank/trashtalk?branch=dev)
 
 ## concept
 
