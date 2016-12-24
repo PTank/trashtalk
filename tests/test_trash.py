@@ -1,4 +1,4 @@
-from tests.init_test import generate_trash, list_files, list_files_size
+from tests.init_test import generate_trash, list_files, list_files_size, trash_with_dir
 from pathlib import Path
 
 
@@ -35,11 +35,11 @@ def test_size(generate_trash, list_files_size):
         assert f in list_files_size
 
 
-def test_clean(generate_trash, list_files):
+def test_clean(list_files, trash_with_dir):
     """
     test all files are removed: /files and /info
     """
-    trash = generate_trash
+    trash = trash_with_dir
     list_files = list_files
     files = Path(trash.path) / "files"
     info = Path(trash.path) / "info"
@@ -64,6 +64,12 @@ def test_clean(generate_trash, list_files):
         assert file_path.exists() == False
         file_info = info / (f + ".trashinfo")
         assert file_info.exists() == False
+
+    # test dir cleaning
+    dir_path = files / 'testdir'
+    assert dir_path.exists() == False
+    dir_info_path = info / 'testdir.trashinfo'
+    assert dir_info_path.exists() == False
 
 
 
