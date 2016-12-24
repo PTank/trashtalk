@@ -48,18 +48,17 @@ def test_clean(generate_trash, list_files):
     one_file = list_files.pop()
     error = trash.clean([one_file])
     one_file_path = files / one_file
-    list(error) # why without list generator test don't work?
     assert one_file_path.exists() == False
     one_file_info = info / (one_file + ".trashinfo")
     assert one_file_info.exists() == False
 
     #test error
     error = trash.clean(['error_file'])
-    assert type(list(error)[0]) == str
+    assert type(error[0]) == str
+    assert len(error) == 1
 
     # test all cleaning
-    error = trash.clean()
-    list(error) # why without list generator test don't work?
+    trash.clean()
     for f in list_files:
         file_path = files / f
         assert file_path.exists() == False

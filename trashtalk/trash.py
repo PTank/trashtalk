@@ -35,6 +35,7 @@ class Trash():
         method to clean files from trash
         if file doesn't exist return 'error message'
         """
+        error = []
         info = False
         if not path:
             info = True
@@ -55,7 +56,8 @@ class Trash():
                     if info.exists():
                         info.unlink()
             except Exception as e:
-                yield str(e)
+                error.append(str(e))
+        return error
 
     def __str__(self):
         return "%s" % (self.path)
