@@ -21,4 +21,6 @@
 
 * add method move to trash option
 * add method to untrash file with trashinfo
+* add __next__ method to Trash
+* complete test
 * doc

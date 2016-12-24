@@ -75,8 +75,14 @@ def trashtalk():
             print("%s" % str(trash))
         if options.l or options.s:
             for i in trash.list_files(options.files, options.s):
-                print("{0:20} {1:>16}".format(i[0], i[1]))
+                if i[0]:
+                    print("{0:20} {1:>16}".format(i[0], i[1]))
+                else:
+                    print(i[1], file=sys.stderr)
         if options.clean:
-            trash.clean(options.files)
+            errors = trash.clean(options.files)
+            if errors:
+                for e in errors:
+                    print("clean: " + e, file=sys.stderr)
         if options.rm:
             print("option -rm not actualy implanted", file=sys.stderr)
