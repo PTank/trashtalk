@@ -57,6 +57,16 @@ def test_clean(generate_trash, list_files):
     error = trash.clean(['error_file'])
     assert type(list(error)[0]) == str
 
+    # test all cleaning
+    error = trash.clean()
+    list(error) # why without list generator test don't work?
+    for f in list_files:
+        file_path = files / f
+        assert file_path.exists() == False
+        file_info = info / (f + ".trashinfo")
+        assert file_info.exists() == False
+
+
 
 def test_restore():
     """
