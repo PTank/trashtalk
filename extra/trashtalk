@@ -1,0 +1,28 @@
+# -*- sh -*-
+#
+# Bash completion function for the 'trashtalk' command.
+
+_trashtalk()
+{
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    #
+    #  All known commands accepted.  Sorted.
+    #
+    #
+    var=""
+	for val in ${COMP_WORDS[@]}
+	do
+		var+=" "$val
+	done
+    opts=`python -c "from trashtalk import autocomplete; autocomplete('$var')"`
+
+    #
+    #
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
+
+}
+complete -F _trashtalk trashtalk

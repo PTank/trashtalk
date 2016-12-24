@@ -4,10 +4,12 @@ import sys
 
 __all__ = ["Trash"]
 
+
 class Trash():
 
-    def __init__(self, path=None):
+    def __init__(self, path=None, name=""):
         self.path = path
+        self.name = name
 
     def list_files(self, list_file=None, size=False):
         """ method to list files in trash

@@ -1,14 +1,16 @@
 #! /usr/bin/env python3
+"""
+Option parser and the main function
+"""
 from __future__ import print_function, absolute_import
 import argparse
-from os import getlogin
-from pathlib import Path
-from trashtalk.make_path import get_media_trash, get_home_trash
+from trashtalk.trash_factory import TrashFactory
 import sys
 
 __all__ = ["trashtalk"]
 
-def parse_option():
+
+def parse_option(args=None):
     parser = argparse.ArgumentParser(
         description="Taking out your trash easily")
     # CLASSIC
@@ -17,7 +19,7 @@ def parse_option():
                         version='%(prog)s: ' + __version__)
     parser.add_argument('--verbose', action='store_true')
     # TRASH SELECTION
-    selection = parser.add_argument_group('trash selection')
+    selection = parser.add_argument_group('trash selections')
     option = parser.add_argument_group('trash options')
     selection.add_argument('trash', nargs='*', default=[],
                            help=("name where you want use trash, "
@@ -44,46 +46,37 @@ def parse_option():
                         help="clean file, or without file all")
     option.add_argument('-rm', action='store', nargs='*',
                         help="move file to selected trash")
+    if args:
+        return parser.parse_args(args)
     return parser.parse_args()
 
 
 def trashtalk():
-    trashs = []
     options = parse_option()
-    if not options.u and not options.au:
-        options.u = [getlogin()]
-    elif options.au:
-        options.u = [i.name for i in Path('/home').iterdir()]
-    if not options.trash:
-        for user in options.u:
-            if options.a or not options.am:
-                trashs.append(get_home_trash(user))
-            if options.am or options.a:
-                trashs.append(get_media_trash(user))
+    factory = TrashFactory()
+    if (options.am or options.trash) and "home" not in options.trash:
+        home = False
     else:
-        for media in options.trash:
-            for user in options.u:
-                t = get_media_trash(user, [media])
-                if t:
-                    trashs.append(t)
-    for t in trashs:
-        for trash in t:
-            if not trash:
-                continue
-            if options.p or (
-                    not options.l and not
-                    options.s and not options.clean
-                    and not options.rm):
-                if options.p:
-                    print('%s: ' % trash[0], end='')
-                print("%s" % str(trash[1]))
-            if options.l or options.s:
-                for i in trash[1].list_files(options.files, options.s):
-                    print("{0:20} {1:>16}".format(i[0], i[1]))
-            if options.clean:
-                trash[1].clean(options.files)
-            if options.rm:
-                print("option -rm not actualy implanted", file=sys.stderr)
-
-if __name__ == "__main__":
-    trashtalk()
+        home = True
+        if options.trash:
+            options.trash.remove('home')
+    if options.a:
+        options.am = True
+    trashs = factory.create_trash(options.u, options.trash, home, options.am)
+    for trash in trashs:
+        if not trash:
+            continue
+        if options.p or (
+                not options.l and not
+                options.s and not options.clean
+                and not options.rm):
+            if options.p:
+                print('%s: ' % trash.name, end='')
+            print("%s" % str(trash))
+        if options.l or options.s:
+            for i in trash.list_files(options.files, options.s):
+                print("{0:20} {1:>16}".format(i[0], i[1]))
+        if options.clean:
+            trash.clean(options.files)
+        if options.rm:
+            print("option -rm not actualy implanted", file=sys.stderr)

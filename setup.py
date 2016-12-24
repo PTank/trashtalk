@@ -5,8 +5,15 @@ from setuptools import setup, find_packages
 import trashtalk
 
 
-requires = ['pathlib==1.0.1',
-            ]
+requires = ['pathlib==1.0.1']
+
+# bash completion
+try:
+    with open('/etc/bash_completion.d/completion', 'w') as eo:
+        eo.write('test')
+    data_files = [('/etc/bash_completion.d/', ['extra/trashtalk'])]
+except:
+    data_files = []
 
 setup(
     name='trashtalk',
@@ -34,9 +41,12 @@ setup(
         "Programming Language :: Python :: 2",
         "Topic :: Utilities"
     ],
+
+    data_files=data_files,
+
     entry_points={
         'console_scripts': [
-            'trashtalk = trashtalk.trashtalk:trashtalk',
+            'trashtalk = trashtalk.core:trashtalk',
         ],
     }
 

@@ -31,4 +31,3 @@ def get_media_trash(user, media=[]):
         else:
             print("no media name: " + m.name, file=sys.stderr)
     return trashs
-
