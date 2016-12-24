@@ -24,7 +24,11 @@ def list_files_size():
 def generate_trash(tmpdir, list_files):
     d = tmpdir.mkdir('trash_test')
     files = tmpdir.mkdir('trash_test/files')
+    info = tmpdir.mkdir('trash_test/info')
+    tmp_desk = tmpdir.mkdir('desk')
+    trash = Trash(str(d))
     for f in list_files:
         files.join(f).write('osef')
-    trash = Trash(str(d))
+        infostring = '[Trash Info]\nPath=%s/%s\nDeletionDate=Unknow\n' % (str(tmp_desk), f)
+        info.join(f + '.trashinfo').write(infostring)
     return trash
