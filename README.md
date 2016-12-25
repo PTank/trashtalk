@@ -10,7 +10,7 @@
 
 	python setup.py install
 
-### exemple
+### example
 
 	$ trashtalk -ap -cl *; clean all trash and print path
 	user: /home/user/.local/share/Trash
@@ -19,8 +19,7 @@
 
 ## todo
 
-* add method move to trash option
-* add method to untrash file with trashinfo
-* add __next__ method to Trash
-* complete test
-* doc
+* [] add method move to trash option
+* [] add method to untrash file with trashinfo
+* [] complete test
+* [] doc

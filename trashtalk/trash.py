@@ -23,12 +23,17 @@ class Trash():
             l = map(lambda x: Path(self.path + '/files/' + x), list_file)
         for i in l:
             try:
-                yield (i.name, ['', i.lstat().st_size][bool(size)])
+                if not i.exists():
+                    raise IOError()
+                list_info_from_file = [i.name]
+                if size:
+                    list_info_from_file.append(i.lstat().st_size)
+                yield list_info_from_file
                 total += i.lstat().st_size
             except Exception as e:
                 yield (None, e)
         if size:
-            yield ("Total: ", total)
+            yield ["Total: ", total]
 
     def clean(self, list_file=None, path=None):
         """
@@ -58,6 +63,12 @@ class Trash():
             except Exception as e:
                 error.append(str(e))
         return error
+
+    def __iter__(self):
+        """
+        Trash object iter on file in /files
+        """
+        return self.list_files()
 
     def __str__(self):
         return "%s" % (self.path)
