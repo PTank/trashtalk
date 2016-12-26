@@ -35,7 +35,7 @@ class Trash():
         if size:
             yield ["Total: ", total]
 
-    def clean(self, list_file=None, path=None):
+    def clean(self, list_files=None, path=None):
         """
         method to clean files from trash
         if file doesn't exist return 'error message'
@@ -45,10 +45,10 @@ class Trash():
         if not path:
             info = True
             path = self.path + '/files/'
-        if not list_file:
+        if not list_files:
             l = Path(path).iterdir()
         else:
-            l = map(lambda x: Path(path + x), list_file)
+            l = map(lambda x: Path(path + x), list_files)
         for i in l:
             try:
                 if i.is_dir():
@@ -63,6 +63,11 @@ class Trash():
             except Exception as e:
                 error.append(str(e))
         return error
+
+    def remove(self, list_files=[]):
+        """
+        move file in list_files to trash and built trashinfo
+        """
 
     def __iter__(self):
         """
