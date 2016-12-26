@@ -21,5 +21,6 @@
 
 * [] add method move to trash option
 * [] add method to untrash file with trashinfo
+* [] add option -h human readable size
 * [] complete test
 * [] doc

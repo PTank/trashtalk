@@ -24,7 +24,7 @@ class Trash():
         for i in l:
             try:
                 if not i.exists():
-                    raise IOError()
+                    raise IOError("File %s doesn't exist" % i.name)
                 list_info_from_file = [i.name]
                 if size:
                     list_info_from_file.append(i.lstat().st_size)

@@ -51,6 +51,19 @@ def parse_option(args=None):
     return parser.parse_args()
 
 
+def print_files(list_files):
+    line = ""
+    for e, value in enumerate(list_files[0]):
+        new_list = [x[e] for x in list_files]
+        spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
+        line += "{%d:%d}" % (e, spaces)
+    for f in list_files:
+        if f[0]:
+            print(line.format(*f))
+        else:
+            print(f[1], file=sys.stderr)
+
+
 def trashtalk():
     options = parse_option()
     factory = TrashFactory()
@@ -71,14 +84,10 @@ def trashtalk():
                 options.s and not options.clean
                 and not options.rm):
             if options.p:
-                print('%s: ' % trash.name, end='')
-            print("%s" % str(trash))
+                print('\033[34;1m%s: ' % trash.name, end='')
+            print("%s\033[0m" % str(trash))
         if options.l or options.s:
-            for i in trash.list_files(options.files, options.s):
-                if i[0]:
-                    print("{0:20} {1:>16}".format(i[0], i[1]))
-                else:
-                    print(i[1], file=sys.stderr)
+            print_files(list(trash.list_files(options.files, options.s)))
         if options.clean:
             errors = trash.clean(options.files)
             if errors:
