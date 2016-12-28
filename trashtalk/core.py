@@ -47,7 +47,7 @@ def parse_option(args=None):
     option.add_argument('-rm', action='store', nargs='*',
                         help="move file to selected trash")
     if args:
-        return parser.parse_args(args)
+        return parser.parse_known_args(args)
     return parser.parse_args()
 
 

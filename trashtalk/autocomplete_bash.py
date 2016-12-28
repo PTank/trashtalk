@@ -7,10 +7,11 @@ from trashtalk.trash_factory import TrashFactory
 def autocomplete(args=''):
     args = args.split()
     args = args[1:]
-    try:
+    if args:
+        options, unknown = parse_option(args)
+        del(unknown)
+    else:
         options = parse_option(args)
-    except:
-        return
     args.reverse()
     factory = TrashFactory()
     if (options.am or options.trash) and "home" not in options.trash:
