@@ -1,5 +1,7 @@
 from __future__ import print_function
 from pathlib import Path
+from datetime import datetime
+from shutil import move
 
 __all__ = ["Trash"]
 
@@ -68,15 +70,17 @@ class Trash():
         """
         move file in list_files to trash and built trashinfo
         """
+        if type(list_files) is not list and type(list_files) is not tuple:
+            # raise error
+            return
         files = Path(self.path + '/files/')
-        print(list_files)
         for f in list_files:
             old_path = Path(f)
             if not old_path.exists():
                 continue
             info_path = Path(self.path+ '/info/' + old_path.name + '.trashinfo')
             info_path.touch()
-            move(str(old_path.absolute()), str(files) + old_path.name)
+            move(str(old_path.absolute()), str(files) + '/' + old_path.name)
             with info_path.open("w") as o:
                 o.write('[Trash Info]\n')
                 o.write('Path=%s\n' % str(old_path.absolute()))

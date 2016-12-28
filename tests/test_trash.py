@@ -73,8 +73,32 @@ def test_clean(list_files, trash_with_dir_and_files):
 
 
 
-def test_restore():
+def test_remove(list_files, generate_trash):
     """
     test file are restore with the correct path
     """
-    pass
+    trash = generate_trash
+    desk = Path(trash.path + '/../desk')
+
+    # create files and dir
+    test_dir = desk / "dir"
+    test_dir.mkdir()
+    new_path = [str(test_dir.absolute())]
+    for f in list_files:
+        new_file = desk / f
+        new_file.touch()
+        new_path.append(str(new_file.absolute()))
+        new_file = test_dir / f
+        new_file.touch()
+    # use remove method
+    trash.remove(new_path)
+    # test
+    for path in new_path:
+        p = Path(path)
+        trash_path = Path(trash.path)
+        assert p.exists() == False
+        assert (trash_path / "files" / p.name).exists() == True
+        if p.name is not "dir":
+            assert (Path(trash.path) / "files/dir" / p.name).exists() == True
+        info = trash_path / "info" / (p.name + ".trashinfo")
+        assert info.exists() == True
