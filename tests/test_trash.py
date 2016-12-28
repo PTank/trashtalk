@@ -4,6 +4,7 @@ from tests.init_test import (generate_trash, list_files,
 from pathlib import Path
 from datetime import datetime
 from trashtalk.exception import WrongFormat
+from trashtalk.trash import Trash
 import pytest
 
 
@@ -14,6 +15,8 @@ def test_path_name(generate_trash):
     assert trash.name == "test"
     assert trash.info == "/test/info"
     assert trash.files == "/test/files"
+    t = Trash()
+    assert t.name == ""
 
 
 def test_iter(trash_with_files, list_files):

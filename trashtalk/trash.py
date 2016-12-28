@@ -8,8 +8,25 @@ __all__ = ["Trash"]
 
 
 class Trash():
+    """
+    This object is an implementation of posix trash
+
+    :Example:
+
+    >>> from trasktalk import Trash
+    >>> trash = Trash("/path/to/trash", "mytrash")
+    >>> for element in trash: # list all elements in this trash
+    >>>     print(element)
+        element1
+        element2
+    """
 
     def __init__(self, path=None, name=""):
+        """
+        You can init Trash without value or
+        path = "The trash path"
+        name = "trash name"
+        """
         if path:
             self.select_path(path, name)
         else:
@@ -21,17 +38,22 @@ class Trash():
         self.info = str((Path(path) / 'info').absolute())
         self.files = str((Path(path) / 'files').absolute())
 
-    def list_files(self, list_file=None, size=False):
+    def list_files(self, files=None, size=False):
         """
         method to list files in trash
-        can print size in byte
-        if file doesn't exist return (None, 'error message')
+
+        can print size in byte with size
+        if file doesn't exist return [None, 'error message']
+
+        :param files: list specific file, if param == None list all elements
+        :param size: at true return size in byte with file name
+        :return: a generator who yield list [filename], or [filename, size]
         """
         total = 0
-        if not list_file:
+        if not files:
             l = Path(self.files).iterdir()
         else:
-            l = map(lambda x: (Path(self.files) / x), list_file)
+            l = map(lambda x: (Path(self.files) / x), files)
         for i in l:
             try:
                 if not i.exists():
@@ -49,7 +71,8 @@ class Trash():
     def clean(self, list_files=None, path=None):
         """
         method to clean files from trash
-        if file doesn't exist return 'error message'
+
+        :return: list of error message
         """
         error = []
         info = False
@@ -96,10 +119,9 @@ class Trash():
                 o.write('DeletionDate=%s\n' % date)
 
     def __iter__(self):
-        """
-        Trash object iter on file in /files
-        """
+        """Trash object iter on file in /files"""
         return self.list_files()
 
     def __str__(self):
+        """return path """
         return "%s" % (self.path)
