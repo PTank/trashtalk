@@ -34,7 +34,5 @@ def autocomplete(args=''):
         if arg[0] in '-':
             if arg == "-f":
                 print(files, end='')
-                return
-            else:
-                break
+            return
     return current_media()

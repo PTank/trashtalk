@@ -25,7 +25,7 @@ __dev__
 
 ## todo
 
-* [ ] add method move to trash option
+* [x] add method move to trash option
 * [ ] add method to untrash file with trashinfo
 * [ ] add option -h human readable size
 * [ ] can take direct path in arg

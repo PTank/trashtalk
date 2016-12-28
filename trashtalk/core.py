@@ -94,4 +94,4 @@ def trashtalk():
                 for e in errors:
                     print("clean: " + e, file=sys.stderr)
         if options.rm:
-            print("option -rm not actualy implanted", file=sys.stderr)
+            trash.remove(options.rm)
