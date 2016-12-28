@@ -3,12 +3,24 @@ from tests.init_test import (generate_trash, list_files,
                              trash_with_files)
 from pathlib import Path
 from datetime import datetime
+from trashtalk.exception import WrongFormat
+import pytest
 
 
 def test_path_name(generate_trash):
     trash = generate_trash
     trash.path = "test"
     assert str(trash) == "test"
+
+
+def test_iter(trash_with_files, list_files):
+    """
+    test list_files from trash
+    """
+    trash = trash_with_files
+    # test all files in list_files
+    for f in trash:
+        assert f[0] in list_files
 
 
 def test_list(trash_with_files, list_files):
@@ -119,3 +131,5 @@ def test_remove(list_files, generate_trash):
     trash.remove(["/tmp/fakepath/nohing/arg.fail"])
     assert (trash_path / "files" / "arg.fail").exists() == False
     assert (trash_path / "info" / "arg.fail.trashinfo").exists() == False
+    with pytest.raises(WrongFormat):
+        trash.remove("string is not accepted")

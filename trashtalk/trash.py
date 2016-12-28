@@ -2,6 +2,7 @@ from __future__ import print_function
 from pathlib import Path
 from datetime import datetime
 from shutil import move
+from trashtalk.exception import WrongFormat
 
 __all__ = ["Trash"]
 
@@ -71,8 +72,7 @@ class Trash():
         move file in list_files to trash and built trashinfo
         """
         if type(list_files) is not list and type(list_files) is not tuple:
-            # raise error
-            return
+            raise WrongFormat()
         files = Path(self.path + '/files/')
         for f in list_files:
             old_path = Path(f)
