@@ -10,8 +10,16 @@ __all__ = ["Trash"]
 class Trash():
 
     def __init__(self, path=None, name=""):
+        if path:
+            self.select_path(path, name)
+        else:
+            self.name = name
+
+    def select_path(self, path, name):
         self.path = path
         self.name = name
+        self.info = str((Path(path) / 'info').absolute())
+        self.files = str((Path(path) / 'files').absolute())
 
     def list_files(self, list_file=None, size=False):
         """
@@ -21,9 +29,9 @@ class Trash():
         """
         total = 0
         if not list_file:
-            l = Path(self.path + '/files').iterdir()
+            l = Path(self.files).iterdir()
         else:
-            l = map(lambda x: Path(self.path + '/files/' + x), list_file)
+            l = map(lambda x: (Path(self.files) / x), list_file)
         for i in l:
             try:
                 if not i.exists():
@@ -47,11 +55,11 @@ class Trash():
         info = False
         if not path:
             info = True
-            path = self.path + '/files/'
+            path = self.files
         if not list_files:
             l = Path(path).iterdir()
         else:
-            l = map(lambda x: Path(path + x), list_files)
+            l = map(lambda x: (Path(path) / x), list_files)
         for i in l:
             try:
                 if i.is_dir():
@@ -60,7 +68,7 @@ class Trash():
                 else:
                     i.unlink()
                 if info:
-                    info = Path(self.path + "/info/" + i.name + ".trashinfo")
+                    info = (Path(self.info) / (i.name + ".trashinfo"))
                     if info.exists():
                         info.unlink()
             except Exception as e:
@@ -73,19 +81,19 @@ class Trash():
         """
         if type(list_files) is not list and type(list_files) is not tuple:
             raise WrongFormat()
-        files = Path(self.path + '/files/')
+        files = Path(self.files)
         for f in list_files:
             old_path = Path(f)
             if not old_path.exists():
                 continue
-            info_path = Path(self.path+ '/info/' + old_path.name + '.trashinfo')
+            info_path = (Path(self.info) / (old_path.name + '.trashinfo'))
             info_path.touch()
             move(str(old_path.absolute()), str(files) + '/' + old_path.name)
             with open(str(info_path.absolute()), "w") as o:
                 o.write('[Trash Info]\n')
                 o.write('Path=%s\n' % str(old_path.absolute()))
                 date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-                o.write('DeletionDate=%s\n'% date)
+                o.write('DeletionDate=%s\n' % date)
 
     def __iter__(self):
         """

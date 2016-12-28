@@ -9,8 +9,11 @@ import pytest
 
 def test_path_name(generate_trash):
     trash = generate_trash
-    trash.path = "test"
-    assert str(trash) == "test"
+    trash.select_path("/test", "test")
+    assert str(trash) == "/test"
+    assert trash.name == "test"
+    assert trash.info == "/test/info"
+    assert trash.files == "/test/files"
 
 
 def test_iter(trash_with_files, list_files):
