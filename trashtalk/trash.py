@@ -81,7 +81,7 @@ class Trash():
             info_path = Path(self.path+ '/info/' + old_path.name + '.trashinfo')
             info_path.touch()
             move(str(old_path.absolute()), str(files) + '/' + old_path.name)
-            with info_path.open("w") as o:
+            with info_path.open("w", encoding="utf-8") as o:
                 o.write('[Trash Info]\n')
                 o.write('Path=%s\n' % str(old_path.absolute()))
                 date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")

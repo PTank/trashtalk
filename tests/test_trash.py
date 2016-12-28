@@ -1,5 +1,8 @@
-from tests.init_test import generate_trash, list_files, list_files_size, trash_with_dir_and_files, trash_with_files
+from tests.init_test import (generate_trash, list_files,
+                             list_files_size, trash_with_dir_and_files,
+                             trash_with_files)
 from pathlib import Path
+from datetime import datetime
 
 
 def test_path_name(generate_trash):
@@ -93,6 +96,7 @@ def test_remove(list_files, generate_trash):
     # use remove method
     trash.remove(new_path)
     # test
+    now = datetime.now()
     for path in new_path:
         p = Path(path)
         trash_path = Path(trash.path)
@@ -102,3 +106,11 @@ def test_remove(list_files, generate_trash):
             assert (Path(trash.path) / "files/dir" / p.name).exists() == True
         info = trash_path / "info" / (p.name + ".trashinfo")
         assert info.exists() == True
+        with info.open(encoding="utf-8") as f:
+            info_str = [i for i in f]
+            assert info_str[0] == "[Trash Info]\n"
+            assert info_str[1].split("=")[1][:-1] == path
+            date = datetime.strptime(info_str[2].split('=')[1][:-1], "%Y-%m-%dT%H:%M:%S")
+            assert now.year == date.year
+            assert now.month == date.month
+            assert now.day == date.day
