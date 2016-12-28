@@ -36,3 +36,7 @@ class TrashFactory():
                 elif error:
                     print("no media name: " + m.name, file=sys.stderr)
         return trashs
+
+    def get_all_media(self, user):
+        for m in Path('/media/' + user).iterdir():
+            yield m.name

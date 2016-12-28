@@ -1,13 +1,7 @@
 from __future__ import print_function, absolute_import
-from trashtalk.make_path import get_media_trash
 from os import getlogin
 from trashtalk.core import parse_option
 from trashtalk.trash_factory import TrashFactory
-
-
-def current_media():
-    for media in get_media_trash(getlogin()):
-        print(media[0], end='')
 
 
 def autocomplete(args=''):
@@ -35,4 +29,5 @@ def autocomplete(args=''):
             if arg == "-f":
                 print(files, end='')
             return
-    return current_media()
+    for media in factory.get_all_media(getlogin()):
+        print(media, end="")

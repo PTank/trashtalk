@@ -18,7 +18,7 @@ __dev__
 
 ### example
 
-	$ trashtalk -ap -cl *; clean all trash and print path
+	$ trashtalk -ap -cl; clean all trash and print path
 	user: /home/user/.local/share/Trash
 	yourmedia: /media/user/yourmedia/.Trash-0000
 
