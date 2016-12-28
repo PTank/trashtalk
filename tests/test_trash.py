@@ -97,9 +97,9 @@ def test_remove(list_files, generate_trash):
     trash.remove(new_path)
     # test
     now = datetime.now()
+    trash_path = Path(trash.path)
     for path in new_path:
         p = Path(path)
-        trash_path = Path(trash.path)
         assert p.exists() == False
         assert (trash_path / "files" / p.name).exists() == True
         if p.name is not "dir":
@@ -114,3 +114,8 @@ def test_remove(list_files, generate_trash):
             assert now.year == date.year
             assert now.month == date.month
             assert now.day == date.day
+
+    # test false info
+    trash.remove(["/tmp/fakepath/nohing/arg.fail"])
+    assert (trash_path / "files" / "arg.fail").exists() == False
+    assert (trash_path / "info" / "arg.fail.trashinfo").exists() == False
