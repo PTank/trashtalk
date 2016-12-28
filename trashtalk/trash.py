@@ -68,6 +68,20 @@ class Trash():
         """
         move file in list_files to trash and built trashinfo
         """
+        files = Path(self.path + '/files/')
+        print(list_files)
+        for f in list_files:
+            old_path = Path(f)
+            if not old_path.exists():
+                continue
+            info_path = Path(self.path+ '/info/' + old_path.name + '.trashinfo')
+            info_path.touch()
+            move(str(old_path.absolute()), str(files) + old_path.name)
+            with info_path.open("w") as o:
+                o.write('[Trash Info]\n')
+                o.write('Path=%s\n' % str(old_path.absolute()))
+                date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+                o.write('DeletionDate=%s\n'% date)
 
     def __iter__(self):
         """
