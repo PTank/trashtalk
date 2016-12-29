@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, find_packages
+from sys import version_info
 import trashtalk
 
 
@@ -11,7 +12,7 @@ requires = ['pathlib==1.0.1']
 try:
     with open('/etc/bash_completion.d/completion', 'w') as eo:
         eo.write('test')
-    data_files = [('/etc/bash_completion.d/', ['extra/trashtalk'])]
+    data_files = [('/etc/bash_completion.d/', ['extra/python%s/trashtalk' % version_info[0]])]
 except:
     data_files = []
 
