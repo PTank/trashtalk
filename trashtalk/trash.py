@@ -61,8 +61,8 @@ class Trash():
                 list_info_from_file = [i.name]
                 if size:
                     list_info_from_file.append(i.lstat().st_size)
+                    total += i.lstat().st_size
                 yield list_info_from_file
-                total += i.lstat().st_size
             except Exception as e:
                 yield (None, e)
         if size:

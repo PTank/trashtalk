@@ -53,6 +53,8 @@ def parse_option(args=None):
 
 def print_files(list_files):
     line = ""
+    if not list_files:
+        return
     for e, value in enumerate(list_files[0]):
         new_list = [x[e] for x in list_files]
         spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
