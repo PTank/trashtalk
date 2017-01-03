@@ -105,13 +105,19 @@ class Trash():
         if type(list_files) is not list and type(list_files) is not tuple:
             raise WrongFormat()
         files = Path(self.files)
+        files_in_trash = list(map(lambda x: x[0],self.list_files()))
         for f in list_files:
             old_path = Path(f)
+            name = old_path.name
+            while name in files_in_trash:
+                i = 1
+                name += str(i)
+                i += 1
             if not old_path.exists():
                 continue
-            info_path = (Path(self.info) / (old_path.name + '.trashinfo'))
+            info_path = (Path(self.info) / (name + '.trashinfo'))
             info_path.touch()
-            move(str(old_path.absolute()), str(files) + '/' + old_path.name)
+            move(str(old_path.absolute()), str(files) + '/' + name)
             with open(str(info_path.absolute()), "w") as o:
                 o.write('[Trash Info]\n')
                 o.write('Path=%s\n' % str(old_path.absolute()))

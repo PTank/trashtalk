@@ -113,9 +113,17 @@ def test_remove(list_files, generate_trash):
         new_file.touch()
     # use remove method
     trash.remove(new_path)
+
+    test_allready_in_trash = desk / list_files[0]
+    test_allready_in_trash.touch()
+    trash.remove([str(test_allready_in_trash.absolute())])
     # test
     now = datetime.now()
     trash_path = Path(trash.path)
+    assert (trash_path / "files" / (
+        test_allready_in_trash.name + '1')).exists() == True
+    assert (trash_path / "info" / (
+        test_allready_in_trash.name + '1.trashinfo')).exists() == True
     for path in new_path:
         p = Path(path)
         assert p.exists() == False
