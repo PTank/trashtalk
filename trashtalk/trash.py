@@ -105,7 +105,7 @@ class Trash():
         if type(list_files) is not list and type(list_files) is not tuple:
             raise WrongFormat()
         files = Path(self.files)
-        files_in_trash = list(map(lambda x: x[0],self.list_files()))
+        files_in_trash = list(map(lambda x: x[0], self.list_files()))
         for f in list_files:
             old_path = Path(f)
             name = old_path.name
@@ -123,6 +123,33 @@ class Trash():
                 o.write('Path=%s\n' % str(old_path.absolute()))
                 date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
                 o.write('DeletionDate=%s\n' % date)
+
+    def restore(self, list_files):
+        if type(list_files) is not list and type(list_files) is not tuple:
+            raise WrongFormat()
+        error = []
+        files_dir = Path(self.files)
+        info_dir = Path(self.info)
+        for f in list_files:
+            file_path = files_dir / f
+            file_info = info_dir / (f + ".trashinfo")
+            if not file_path.exists():
+                error.append("file doesn't in %s trash" % self.name)
+                continue
+            if not file_info.exists():
+                error.append(
+                    "file doesn't have trahsinfo in %s trash" % self.name)
+                continue
+            with file_info.open() as o:
+                i = list(o)
+                old_path = i[1].split("Path=")[1][:-1]
+                # move file to old path
+                try:
+                    move(str(file_path.absolute()), old_path)
+                    file_info.unlink()
+                except Exception as e:
+                    error.append(str(e))
+        return error
 
     def __iter__(self):
         """Trash object iter on file in /files"""

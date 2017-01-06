@@ -96,7 +96,7 @@ def test_clean(list_files, trash_with_dir_and_files):
 
 def test_remove(list_files, generate_trash):
     """
-    test file are restore with the correct path
+    test file are remove with the correct info
     """
     trash = generate_trash
     desk = Path(trash.path + '/../desk')
@@ -121,29 +121,46 @@ def test_remove(list_files, generate_trash):
     now = datetime.now()
     trash_path = Path(trash.path)
     assert (trash_path / "files" / (
-        test_allready_in_trash.name + '1')).exists() == True
+        test_allready_in_trash.name + '1')).exists() is True
     assert (trash_path / "info" / (
-        test_allready_in_trash.name + '1.trashinfo')).exists() == True
+        test_allready_in_trash.name + '1.trashinfo')).exists() is True
     for path in new_path:
         p = Path(path)
-        assert p.exists() == False
-        assert (trash_path / "files" / p.name).exists() == True
+        assert p.exists() is False
+        assert (trash_path / "files" / p.name).exists() is True
         if p.name is not "dir":
-            assert (Path(trash.path) / "files/dir" / p.name).exists() == True
+            assert (Path(trash.path) / "files/dir" / p.name).exists() is True
         info = trash_path / "info" / (p.name + ".trashinfo")
-        assert info.exists() == True
+        assert info.exists() is True
         with info.open(encoding="utf-8") as f:
             info_str = [i for i in f]
             assert info_str[0] == "[Trash Info]\n"
             assert info_str[1].split("=")[1][:-1] == path
-            date = datetime.strptime(info_str[2].split('=')[1][:-1], "%Y-%m-%dT%H:%M:%S")
+            date = datetime.strptime(
+                info_str[2].split('=')[1][:-1], "%Y-%m-%dT%H:%M:%S")
             assert now.year == date.year
             assert now.month == date.month
             assert now.day == date.day
 
     # test false info
     trash.remove(["/tmp/fakepath/nohing/arg.fail"])
-    assert (trash_path / "files" / "arg.fail").exists() == False
-    assert (trash_path / "info" / "arg.fail.trashinfo").exists() == False
+    assert (trash_path / "files" / "arg.fail").exists() is False
+    assert (trash_path / "info" / "arg.fail.trashinfo").exists() is False
     with pytest.raises(WrongFormat):
         trash.remove("string is not accepted")
+
+
+def test_restore(trash_with_files, list_files):
+    trash = trash_with_files
+    desk = (Path(str(trash)) / '..' / 'desk')
+    path_files = (Path(str(trash)) / "files")
+    path_info = (Path(str(trash)) / "info")
+    trash.restore(list_files)
+    for f in list_files:
+        assert (desk / f).exists() is True
+        assert (path_files / f).exists() is False
+        assert (path_info / (f + ".trashinfo")).exists() is False
+    with pytest.raises(WrongFormat):
+        trash.restore("string is not accepted")
+    error = trash.restore(list_files)
+    assert bool(error) is True
