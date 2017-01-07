@@ -46,6 +46,8 @@ def parse_option(args=None):
                         help="clean file, or without file all")
     option.add_argument('-rm', action='store', nargs='*',
                         help="move file to selected trash")
+    option.add_argument('-re', action='store_true', default=False,
+                        help="restore file from selected trash")
     if args:
         return parser.parse_known_args(args)
     return parser.parse_args()
@@ -97,3 +99,7 @@ def trashtalk():
                     print("clean: " + e, file=sys.stderr)
         if options.rm:
             trash.remove(options.rm)
+        if options.re:
+            error = trash.restore(options.f)
+            for e in error:
+                print(e, file=sys.stderr)
