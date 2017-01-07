@@ -106,6 +106,7 @@ class Trash():
             raise WrongFormat()
         files = Path(self.files)
         files_in_trash = list(map(lambda x: x[0], self.list_files()))
+        error = []
         for f in list_files:
             old_path = Path(f)
             name = old_path.name
@@ -114,6 +115,7 @@ class Trash():
                 name += str(i)
                 i += 1
             if not old_path.exists():
+                error.append("file %s doesn't exist" % old_path.name)
                 continue
             info_path = (Path(self.info) / (name + '.trashinfo'))
             info_path.touch()
@@ -123,6 +125,7 @@ class Trash():
                 o.write('Path=%s\n' % str(old_path.absolute()))
                 date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
                 o.write('DeletionDate=%s\n' % date)
+        return error
 
     def restore(self, list_files):
         if type(list_files) is not list and type(list_files) is not tuple:

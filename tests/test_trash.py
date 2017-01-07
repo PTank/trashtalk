@@ -143,7 +143,8 @@ def test_remove(list_files, generate_trash):
             assert now.day == date.day
 
     # test false info
-    trash.remove(["/tmp/fakepath/nohing/arg.fail"])
+    error = trash.remove(["/tmp/fakepath/nohing/arg.fail"])
+    assert bool(error) is True
     assert (trash_path / "files" / "arg.fail").exists() is False
     assert (trash_path / "info" / "arg.fail.trashinfo").exists() is False
     with pytest.raises(WrongFormat):
@@ -163,4 +164,9 @@ def test_restore(trash_with_files, list_files):
     with pytest.raises(WrongFormat):
         trash.restore("string is not accepted")
     error = trash.restore(list_files)
+    assert bool(error) is True
+
+    test_without_info = path_files / "file.test"
+    test_without_info.touch()
+    error = trash.restore([str(test_without_info.absolute())])
     assert bool(error) is True

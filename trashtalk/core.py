@@ -85,6 +85,7 @@ def trashtalk():
         options.am = True
     trashs = factory.create_trash(options.u, options.trash, home, options.am)
     for trash in trashs:
+        error = []
         if not trash:
             continue
         if options.p or (
@@ -97,13 +98,11 @@ def trashtalk():
         if options.l or options.s:
             print_files(list(trash.list_files(options.files, options.s)))
         if options.clean:
-            errors = trash.clean(options.files)
-            if errors:
-                for e in errors:
-                    print("clean: " + e, file=sys.stderr)
+            error = trash.clean(options.files)
         if options.rm:
-            trash.remove(options.rm)
+            error = trash.remove(options.rm)
         if options.re:
             error = trash.restore(options.f)
+        if error:
             for e in error:
                 print(e, file=sys.stderr)
