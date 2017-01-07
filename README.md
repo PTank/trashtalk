@@ -26,8 +26,8 @@ __dev__
 ## todo
 
 * [x] add method move to trash option
-* [ ] add method to untrash file with trashinfo
-* [ ] add option -h human readable size
+* [x] add method to untrash file with trashinfo
+* [x] human readable size standard
 * [ ] can take direct path in arg
 * [ ] add a .trashtalk in home who can personalise trash location
 * [ ] complete test

@@ -6,6 +6,7 @@ from __future__ import print_function, absolute_import
 import argparse
 from trashtalk.trash_factory import TrashFactory
 import sys
+from trashtalk.tools import human_readable_from_bytes
 
 __all__ = ["trashtalk"]
 
@@ -57,6 +58,9 @@ def print_files(list_files):
     line = ""
     if not list_files:
         return
+    if len(list_files[0]) > 1:
+        for row in list_files:
+            row[1] = human_readable_from_bytes(row[1])
     for e, value in enumerate(list_files[0]):
         new_list = [x[e] for x in list_files]
         spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
