@@ -5,6 +5,18 @@ from pathlib import Path
 from trashtalk.trash import Trash
 import sys
 
+"""
+Module who generate trash
+
+:Todo
+rename file: generate_trash.py
+remove class and make function
+change this in core.py and autocomplete_bash.py
+add better way of searching media or trash
+"""
+
+MEDIA_DIR = ['/media']
+TRASHS_PATH = []
 
 class TrashFactory():
     """
