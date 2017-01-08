@@ -21,3 +21,5 @@ def test_human_readable_from_bytes():
     assert e == "1E"
     assert z == "1Z"
     assert y == "1Y"
+
+    assert "test error" == human_readable_from_bytes("test error")
