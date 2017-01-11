@@ -1,7 +1,7 @@
 from __future__ import print_function, absolute_import
 from os import getlogin
 from trashtalk.core import parse_option
-from trashtalk.trash_factory import TrashFactory
+from trashtalk.generate_trashs import TrashFactory
 
 
 def autocomplete(args=''):

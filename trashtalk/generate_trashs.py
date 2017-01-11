@@ -4,6 +4,7 @@ from os import getlogin
 from pathlib import Path
 from trashtalk.trash import Trash
 import sys
+from os.path import expanduser
 
 """
 Module who generate trash
@@ -17,6 +18,27 @@ add better way of searching media or trash
 
 MEDIA_DIR = ['/media']
 TRASHS_PATH = []
+
+with open(expanduser('~/.trashtalk')) as f:
+    for line in f:
+        try:
+            key, val = line.split("=")
+            if key == "MEDIA_PATH":
+                MEDIA_DIR.append(val)
+            elif key == "TRASH_PATH":
+                path, name = val.split(',')
+                TRASHS_PATH.append(name, path)
+        except:
+            pass
+
+
+def generate_trashs( users=[], medias=[], home=True, all_media=False, error=True):
+    trashs = []
+    if not users:
+        users = [getlogin()]
+    for user in users:
+        pass
+
 
 class TrashFactory():
     """

@@ -4,7 +4,7 @@ Option parser and the main function
 """
 from __future__ import print_function, absolute_import
 import argparse
-from trashtalk.trash_factory import TrashFactory
+from trashtalk.generate_trashs import TrashFactory
 import sys
 from trashtalk.tools import human_readable_from_bytes
 
