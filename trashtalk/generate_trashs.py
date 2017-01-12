@@ -18,13 +18,13 @@ TRASH_PATH=a/direct/path/to/trash , nameofyourtrash
 """
 
 MEDIA_DIR = ['/media']
-TRASHS_PATH = [] # not allready implemented
+TRASHS_PATH = [] # direct link to Trash
 HOME_TRASH_PATH = ".local/share/Trash"
 
 
 def add_profil_info(f):
     for line in f:
-        line = line.split('#')[0]
+        line = line.split('#')[0].strip()
         try:
             key, val = line.split("=")
             if key == "MEDIA_PATH":

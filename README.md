@@ -30,7 +30,7 @@ __dev__
 * [x] human readable size standard
 * [x] can take direct path in arg ? not yet
 * [x] add error return in remove method
-* [ ] add media from /media without /user
-* [ ] add a .trashtalk in home who can personalise trash location
-* [ ] complete test, trash restore, factory, tools
+* [x] add media from /media without /user
+* [x] add a .trashtalk in home who can personalise trash location
+* [ ] complete test, trash restore, generatetrashs,  tools
 * [ ] doc
