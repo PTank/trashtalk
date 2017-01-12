@@ -30,8 +30,6 @@ def parse_option(args=None):
                            help="select all trash (home + all your media)")
     selection.add_argument('-u', action='store', nargs='*',
                            help="select user")
-    selection.add_argument('-au', action='store_true', default=False,
-                           help="select all home")
     selection.add_argument('-am', action='store_true', default=False,
                            help="select all media, this can depend of user")
     # TRASH OPTION

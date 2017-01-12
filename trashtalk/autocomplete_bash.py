@@ -16,6 +16,8 @@ def autocomplete(args=''):
         home = False
     else:
         home = True
+    if options.a:
+        options.am = True
     files = ""
     trashs, error = generate_trashs(options.u, options.trash,
                                   home, options.am)
@@ -28,5 +30,7 @@ def autocomplete(args=''):
             if arg == "-f":
                 print(files, end='')
             return
+    string_media = ""
     for trash in get_media_trashs(getlogin())[0]:
-        print(trash.name, end="")
+        string_media += " " + trash.name
+    print(string_media, end="")

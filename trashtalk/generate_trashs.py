@@ -31,7 +31,7 @@ def add_profil_info(f):
                 MEDIA_DIR.append(val)
             elif key == "TRASH_PATH":
                 path, name = val.split(',')
-                TRASHS_PATH.append(name, path)
+                TRASHS_PATH.append((name.strip(), path.strip()))
         except:
             pass
 
@@ -63,11 +63,18 @@ def get_media_trashs(user, medias_name=[]):
     error = []
     media_dir = MEDIA_DIR + ["%s/%s" % (MEDIA_DIR[0], user)]
     for d in media_dir:
-        d = Path(d)
-        for m in d.iterdir():
+        m_d = Path(d)
+        for m in m_d.iterdir():
             trash = m /  (".Trash-" + str(getpwnam(user)[2]))
             if trash.exists() and (not medias_name or m.name in medias_name):
                 trashs.append(Trash(str(trash.absolute()), m.name))
             elif m.name in medias_name:
                 error.append("can't find: " + m.name)
+    for d in TRASHS_PATH:
+        trash = Path(d[1])
+        name = d[0]
+        if trash.exists() and (not medias_name or name in medias_name):
+            trashs.append(Trash(str(trash.absolute()), name))
+        elif name in medias_name:
+            error.append("can't find: " + name)
     return trashs, error
