@@ -1,7 +1,7 @@
 from __future__ import print_function, absolute_import
 from os import getlogin
 from trashtalk.core import parse_option
-from trashtalk.generate_trashs import TrashFactory
+from trashtalk.generate_trashs import generate_trashs, get_media_trashs
 
 
 def autocomplete(args=''):
@@ -9,18 +9,16 @@ def autocomplete(args=''):
     args = args[1:]
     if args:
         options, unknown = parse_option(args)
-        del(unknown)
     else:
         options = parse_option(args)
     args.reverse()
-    factory = TrashFactory()
     if (options.am or options.trash) and "home" not in options.trash:
         home = False
     else:
         home = True
     files = ""
-    trashs = factory.create_trash(options.u, options.trash,
-                                  home, options.am, error=False)
+    trashs, error = generate_trashs(options.u, options.trash,
+                                  home, options.am)
     for trash in trashs:
         for f in trash.list_files():
             files += ' ' + f[0]
@@ -30,5 +28,5 @@ def autocomplete(args=''):
             if arg == "-f":
                 print(files, end='')
             return
-    for media in factory.get_all_media(getlogin()):
-        print(media, end="")
+    for trash in get_media_trashs(getlogin())[0]:
+        print(trash.name, end="")

@@ -4,7 +4,7 @@ Option parser and the main function
 """
 from __future__ import print_function, absolute_import
 import argparse
-from trashtalk.generate_trashs import TrashFactory
+from trashtalk.generate_trashs import generate_trashs
 import sys
 from trashtalk.tools import human_readable_from_bytes
 
@@ -74,7 +74,6 @@ def print_files(list_files):
 
 def trashtalk():
     options = parse_option()
-    factory = TrashFactory()
     if (options.am or options.trash) and "home" not in options.trash:
         home = False
     else:
@@ -83,7 +82,9 @@ def trashtalk():
             options.trash.remove('home')
     if options.a:
         options.am = True
-    trashs = factory.create_trash(options.u, options.trash, home, options.am)
+    trashs , error = generate_trashs(options.u, options.trash, home, options.am)
+    for error in error:
+        print(error, file=sys.stderr)
     for trash in trashs:
         error = []
         if not trash:

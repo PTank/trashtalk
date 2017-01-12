@@ -9,18 +9,22 @@ from os.path import expanduser
 """
 Module who generate trash
 
-:Todo
-rename file: generate_trash.py
-remove class and make function
-change this in core.py and autocomplete_bash.py
-add better way of searching media or trash
+:example
+in /home/user/.trashtalk
+add
+# to make a commentary
+MEDIA_PATH=path/to/your/media
+TRASH_PATH=a/direct/path/to/trash , nameofyourtrash
 """
 
 MEDIA_DIR = ['/media']
-TRASHS_PATH = []
+TRASHS_PATH = [] # not allready implemented
+HOME_TRASH_PATH = ".local/share/Trash"
 
-with open(expanduser('~/.trashtalk')) as f:
+
+def add_profil_info(f):
     for line in f:
+        line = line.split('#')[0]
         try:
             key, val = line.split("=")
             if key == "MEDIA_PATH":
@@ -31,46 +35,39 @@ with open(expanduser('~/.trashtalk')) as f:
         except:
             pass
 
+profil = Path(expanduser("~/.trashtalk"))
+if profil.exists():
+    add_profil_info(profil.open())
 
-def generate_trashs( users=[], medias=[], home=True, all_media=False, error=True):
+def generate_trashs(users=[], medias=[], home=True, all_media=False):
     trashs = []
+    error = []
     if not users:
         users = [getlogin()]
     for user in users:
-        pass
+        if home:
+            trash = Path(expanduser("~%s/%s" % (user, HOME_TRASH_PATH)))
+            if trash.exists():
+                trashs.append(Trash(str(trash.absolute()), user))
+            else:
+                error.append("can't find: " + trash.name)
+        if all_media or medias:
+            trashs_media, errors_media = get_media_trashs(user, medias)
+            trashs += trashs_media
+            error += errors_media
+    return trashs, error
 
 
-class TrashFactory():
-    """
-    """
-
-    def create_trash(self, users=[], medias=[], home=True, all_media=False, error=True):
-        trashs = []
-        if not users:
-            users = [getlogin()]
-        for user in users:
-            if home:
-                path = Path('/home/' + user + "/.local/share/Trash")
-                if path.exists():
-                    trashs.append(Trash(str(path), user))
-                elif error:
-                    print("can't find: " + path.name, file=sys.stderr)
-            if all_media:
-                medias = Path("/media/" + user).iterdir()
-            elif medias:
-                medias = map(lambda x: Path("/media/%s/%s" % (user, x)),
-                             medias)
-            for m in medias:
-                if m.exists():
-                    t = m / (".Trash-" + str(getpwnam(user)[2]))
-                    if t.exists():
-                        trashs.append((Trash(str(t), m.name)))
-                    elif error:
-                        print("media " + m.name + " have no trash", file=sys.stderr)
-                elif error:
-                    print("no media name: " + m.name, file=sys.stderr)
-        return trashs
-
-    def get_all_media(self, user):
-        for m in Path('/media/' + user).iterdir():
-            yield m.name
+def get_media_trashs(user, medias_name=[]):
+    trashs = []
+    error = []
+    media_dir = MEDIA_DIR + ["%s/%s" % (MEDIA_DIR[0], user)]
+    for d in media_dir:
+        d = Path(d)
+        for m in d.iterdir():
+            trash = m /  (".Trash-" + str(getpwnam(user)[2]))
+            if trash.exists() and (not medias_name or m.name in medias_name):
+                trashs.append(Trash(str(trash.absolute()), m.name))
+            elif m.name in medias_name:
+                error.append("can't find: " + m.name)
+    return trashs, error
