@@ -9,6 +9,10 @@
 
 ## install
 
+	pip install trashtalk
+	# or
+	git clone git@github.com:PTank/trashtalk.git
+	cd trashtalk
 	python setup.py install
 
 ### .trashtalk

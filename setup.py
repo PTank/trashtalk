@@ -27,6 +27,8 @@ setup(
 
     description="simplify trash in command line",
     long_description=open('README.md').read(),
+    author="PTank",
+    author_email="akazian@student.42.fr",
     url="https://github.com/PTank/trashtalk",
 
     install_requires=requires,
