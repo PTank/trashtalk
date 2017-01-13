@@ -18,20 +18,8 @@ __dev__
 
 ### example
 
-	$ trashtalk -ap -cl; clean all trash and print path
-	user: /home/user/.local/share/Trash
-	yourmedia: /media/user/yourmedia/.Trash-0000
-
-
-## todo
-
-* [x] add method move to trash option
-* [x] add method to untrash file with trashinfo
-* [x] human readable size standard
-* [x] can take direct path in arg ? not yet
-* [x] add error return in remove method
-* [x] add media from /media without /user
-* [x] add a .trashtalk in home who can personalise trash location
-* [x] print all info
-* [ ] complete test, trash restore, generatetrashs,  tools
-* [ ] doc
+	$ trashtalk -cl; clean trash from yout home
+	$ trashtalk media_name -ls
+	>>> file1 5M
+	>>> file2 100.10M
+	>>> file3 1.36G
