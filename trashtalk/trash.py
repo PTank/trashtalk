@@ -57,7 +57,7 @@ class Trash():
         for i in l:
             try:
                 if not i.exists():
-                    raise IOError("File %s doesn't exist" % i.name)
+                    raise IOError("File: %s doesn't exist" % i.name)
                 list_info_from_file = [i.name]
                 if size:
                     list_info_from_file.append(i.lstat().st_size)
@@ -74,7 +74,7 @@ class Trash():
                                 list_info_from_file.append("unknow")
                 yield list_info_from_file
             except Exception as e:
-                yield (None, e)
+                yield [None, str(e)]
         if size:
             yield ["Total: ", total]
 

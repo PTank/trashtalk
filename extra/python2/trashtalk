@@ -28,6 +28,7 @@ _trashtalk()
 	_filedir
 	return 0
     else
+	local IFS=$'\n'
     	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     fi
     return 0

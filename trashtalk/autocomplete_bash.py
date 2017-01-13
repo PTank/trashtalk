@@ -18,19 +18,15 @@ def autocomplete(args=''):
         home = True
     if options.a:
         options.am = True
-    files = ""
     trashs, error = generate_trashs(options.u, options.trash,
                                   home, options.am)
-    for trash in trashs:
-        for f in trash.list_files():
-            files += ' ' + f[0]
 
     for arg in args:
         if arg[0] in '-':
             if arg == "-f":
-                print(files, end='')
+                for trash in trashs:
+                    for f in trash.list_files():
+                        print(r"%s" % f[0])
             return
-    string_media = ""
     for trash in get_media_trashs(getlogin())[0]:
-        string_media += " " + trash.name
-    print(string_media, end="")
+        print(trash.name)
