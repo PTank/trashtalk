@@ -38,7 +38,7 @@ class Trash():
         self.info = str((Path(path) / 'info').absolute())
         self.files = str((Path(path) / 'files').absolute())
 
-    def list_files(self, files=None, size=False):
+    def list_files(self, files=None, size=False, info=False):
         """
         method to list files in trash
 
@@ -62,6 +62,16 @@ class Trash():
                 if size:
                     list_info_from_file.append(i.lstat().st_size)
                     total += i.lstat().st_size
+                if info:
+                    i = (Path(self.info) / (i.name + ".trashinfo"))
+                    if i.exists():
+                        line = list(i.open())
+                        for i in range(1, 3):
+                            try:
+                                list_info_from_file.append(
+                                    line[i].split('=')[1].strip())
+                            except:
+                                list_info_from_file.append("unknow")
                 yield list_info_from_file
             except Exception as e:
                 yield (None, e)

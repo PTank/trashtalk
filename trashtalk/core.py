@@ -6,7 +6,7 @@ from __future__ import print_function, absolute_import
 import argparse
 from trashtalk.generate_trashs import generate_trashs
 import sys
-from trashtalk.tools import human_readable_from_bytes
+from trashtalk.tools import print_files
 
 __all__ = ["trashtalk"]
 
@@ -41,6 +41,8 @@ def parse_option(args=None):
                         help="list file in trash")
     option.add_argument('-s', action='store_true',
                         help=("print size"))
+    option.add_argument('-i', action='store_true',
+                        help=("print info"))
     option.add_argument('-cl', '--clean', action='store_true',
                         help="clean file, or without file all")
     option.add_argument('-rm', action='store', nargs='*',
@@ -50,24 +52,6 @@ def parse_option(args=None):
     if args:
         return parser.parse_known_args(args)
     return parser.parse_args()
-
-
-def print_files(list_files):
-    line = ""
-    if not list_files:
-        return
-    if len(list_files[0]) > 1:
-        for row in list_files:
-            row[1] = human_readable_from_bytes(row[1])
-    for e, value in enumerate(list_files[0]):
-        new_list = [x[e] for x in list_files]
-        spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
-        line += "{%d:%d}" % (e, spaces)
-    for f in list_files:
-        if f[0]:
-            print(line.format(*f))
-        else:
-            print(f[1], file=sys.stderr)
 
 
 def trashtalk():
@@ -95,7 +79,10 @@ def trashtalk():
                 print('\033[34;1m%s: ' % trash.name, end='')
             print("%s\033[0m" % str(trash))
         if options.l or options.s:
-            print_files(list(trash.list_files(options.files, options.s)))
+            print_files(
+                list(trash.list_files(options.files, options.s, options.i)),
+                options.s + options.i * 2 + 1
+            )
         if options.clean:
             error = trash.clean(options.files)
         if options.rm:

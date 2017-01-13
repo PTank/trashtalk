@@ -32,5 +32,6 @@ __dev__
 * [x] add error return in remove method
 * [x] add media from /media without /user
 * [x] add a .trashtalk in home who can personalise trash location
+* [x] print all info
 * [ ] complete test, trash restore, generatetrashs,  tools
 * [ ] doc

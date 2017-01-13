@@ -56,6 +56,15 @@ def test_size(trash_with_files, list_files_size):
         assert f in list_files_size
 
 
+def test_info_list(trash_with_files, list_files, tmpdir):
+    trash = trash_with_files
+    desk = tmpdir.join('desk')
+    for f in trash.list_files(info=True):
+        assert f[0] in list_files
+        assert f[1] == "%s/%s" % (str(desk), f[0])
+        assert f[2] == "Unknow"
+
+
 def test_clean(list_files, trash_with_dir_and_files):
     """
     test all files are removed: /files and /info
