@@ -1,5 +1,5 @@
 from __future__ import print_function, absolute_import
-from pwd import getpwnam
+import pwd
 from os import getlogin
 from pathlib import Path
 from trashtalk.trash import Trash
@@ -64,8 +64,10 @@ def get_media_trashs(user, medias_name=[]):
     media_dir = MEDIA_DIR + ["%s/%s" % (MEDIA_DIR[0], user)]
     for d in media_dir:
         m_d = Path(d)
+        if not m_d.exists():
+            continue
         for m in m_d.iterdir():
-            trash = m /  (".Trash-" + str(getpwnam(user)[2]))
+            trash = m /  (".Trash-" + str(pwd.getpwnam(user)[2]))
             if trash.exists() and (not medias_name or m.name in medias_name):
                 trashs.append(Trash(str(trash.absolute()), m.name))
             elif m.name in medias_name:

@@ -26,11 +26,14 @@ def list_files_size():
 @pytest.fixture()
 def generate_trash(tmpdir):
     d = tmpdir.mkdir('trash_test')
+    m = tmpdir.mkdir('media')
+    m.mkdir('.Trash-0000')
     files = tmpdir.mkdir('trash_test/files')
     info = tmpdir.mkdir('trash_test/info')
     tmp_desk = tmpdir.mkdir('desk')
     trash = Trash(str(d), 'trash_test')
     return trash
+
 
 
 @pytest.fixture()
