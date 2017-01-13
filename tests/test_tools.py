@@ -33,3 +33,14 @@ def test_print_files(capsys):
     assert s[0] == "un    2  3 4"
     assert s[1] == "deux  2  3  "
     assert s[2] == "trois 2  3 4"
+
+    print_files([], 4)
+    out, err = capsys.readouterr()
+    assert bool(err) == False
+    assert bool(out) == False
+
+    l = [[None, "error"]]
+    print_files(l, 4)
+    out, err = capsys.readouterr()
+    assert bool(out) == False
+    assert err == "error\n"
