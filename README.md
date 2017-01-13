@@ -11,10 +11,21 @@
 
 	python setup.py install
 
+### .trashtalk
+
+You can add a .trahstalk in your home for add specific trash path or media path
+
+	# this is a comment
+	TRASH_PATH=/direct/path/to/Trash , "name of this trash"
+	MEDIA_PATH=/path/to/media/
+	# you can add multiple path
+
 ### example
 
-	$ trashtalk -cl; clean trash from yout home
+	$ trashtalk -cl # clean trash from yout home
+	$ trashtalk -f "file" -cl # clean only this file from trash
 	$ trashtalk media_name -ls
 	>>> file1 5M
 	>>> file2 100.10M
-	>>> file3 1.36G
+	>>> file3 100M
+	>>> total 205.10M
