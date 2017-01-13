@@ -31,7 +31,7 @@ def test_get_media_trashs(generate_trash, tmpdir, monkeypatch):
     trashs, err = generate_trashs.get_media_trashs("remy", ['desk'])
     assert trashs == []
     assert bool(err) is True
-    generate_trashs.TRASHS_PATH = [("test", str(tmpdir) + "pouet")]
-    trashs, err = generate_trashs.get_media_trashs("remy", ['desk'])
+    generate_trashs.TRASHS_PATH = [("error", str(tmpdir) + "/fail")]
+    trashs, err = generate_trashs.get_media_trashs("remy", ['error'])
     assert trashs == []
     assert bool(err) is True
