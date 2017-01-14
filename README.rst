@@ -13,6 +13,7 @@ Install
 -------
 
 ::
+
     pip install trashtalk
     # or manually
     git clone git@github.com:PTank/trashtalk.git
@@ -22,7 +23,8 @@ Install
 Usage
 -----
 
-::
+.. code-block::bash
+
     trashtalk # with any argument return path to trash
     trashtalk -cl # clean all files in trash
     trashtalk -l -s # -l list files in trash -s add size info
@@ -32,9 +34,10 @@ Usage
 .trashtalk
 ----------
 
-You can write a file for help your trash usage
+You can write a '.trashtalk' file on your home for help your trash usage
 
 ::
+
     # this is a comment
     TRASH_PATH=direct/path/to/trash , name_of_this_trash
     MEDIA_PATH=path/of/your/medias
