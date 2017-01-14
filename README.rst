@@ -1,7 +1,7 @@
 TRASHTALK
 =========
 
-Script to simplify trash gestion
+*Script to simplify trash gestion*
 
 .. image:: https://travis-ci.org/PTank/trashtalk.svg?branch=master
     :target: https://travis-ci.org/PTank/trashtalk
@@ -18,7 +18,6 @@ Install
     git clone git@github.com:PTank/trashtalk.git
     cd trashtalk
     python setup.py install
-::
 
 Usage
 -----
@@ -29,7 +28,6 @@ Usage
     trashtalk -l -s # -l list files in trash -s add size info
     # you can select multiple trash
     trashtalk -h # for more info
-::
 
 .trashtalk
 ----------
@@ -41,4 +39,3 @@ You can write a file for help your trash usage
     TRASH_PATH=direct/path/to/trash , name_of_this_trash
     MEDIA_PATH=path/of/your/medias
     # you can add multiple path
-::
