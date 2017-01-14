@@ -28,6 +28,7 @@ Usage
     trashtalk # with any argument return path to trash
     trashtalk -cl # clean all files in trash
     trashtalk -l -s # -l list files in trash -s add size info
+    trashtalk -f # you can tab file from selected trash, use with options (cl, l, s, i, re)
     # you can select multiple trash
     trashtalk -h # for more info
 
