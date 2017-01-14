@@ -23,7 +23,7 @@ Install
 Usage
 -----
 
-.. code-block::bash
+.. code-block:: bash
 
     trashtalk # with any argument return path to trash
     trashtalk -cl # clean all files in trash
