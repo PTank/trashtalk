@@ -17,7 +17,7 @@ except:
 
 setup(
     name='trashtalk',
-    version="0.0.6",
+    version="0.0.6.1",
 
     packages=find_packages(),
 
