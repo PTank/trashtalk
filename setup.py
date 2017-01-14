@@ -3,7 +3,6 @@
 
 from setuptools import setup, find_packages
 from sys import version_info
-import trashtalk
 
 
 requires = ['pathlib==1.0.1']
@@ -18,7 +17,7 @@ except:
 
 setup(
     name='trashtalk',
-    version=trashtalk.__version__,
+    version="0.0.5",
 
     packages=find_packages(),
 
@@ -26,7 +25,7 @@ setup(
     tests_require=['pytest'],
 
     description="simplify trash in command line",
-    long_description=open('README.md').read(),
+    long_description=open('README.rst').read(),
     author="PTank",
     author_email="akazian@student.42.fr",
     url="https://github.com/PTank/trashtalk",
