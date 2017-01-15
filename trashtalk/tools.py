@@ -19,7 +19,7 @@ def print_files(list_files, nb_col=1):
         return
     if len(list_files[0]) > 1:
         for row in list_files:
-            row[1] = human_readable_from_bytes(row[1])
+            row[1] = str(human_readable_from_bytes(row[1]))
     for e in range(nb_col):
         new_list = []
         for x in list_files:
