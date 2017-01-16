@@ -25,14 +25,14 @@ def test_human_readable_from_bytes():
     assert "test error" == human_readable_from_bytes("test error")
 
 def test_print_files(capsys):
-    l = [["un", 2, 3, 4], ["deux", 2, 3], ["trois", 2, 3, 4]]
+    l = [["un", 2, 3, 432], ["deux", 2, 3], ["trois", 2, 3, 4]]
     print_files(l, 4)
     out, err = capsys.readouterr()
     assert bool(err) == False
     s = out.split('\n')
-    assert s[0] == "un    2  3 4"
-    assert s[1] == "deux  2  3  "
-    assert s[2] == "trois 2  3 4"
+    assert s[0] == "un    2 3 432"
+    assert s[1] == "deux  2 3  "
+    assert s[2] == "trois 2 3 4"
 
     print_files([], 4)
     out, err = capsys.readouterr()

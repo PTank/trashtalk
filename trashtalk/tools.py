@@ -28,7 +28,12 @@ def print_files(list_files, nb_col=1):
             except:
                 x.append("")
                 new_list.append("")
-        spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
+            if x[e]:
+                x[e] = str(x[e])
+        if e == nb_col -1:
+            spaces = 1
+        else:
+            spaces = len(str(max(new_list, key=lambda x: len(str(x))))) + 1
         line += "{%d:%d}" % (e, spaces)
     for f in list_files:
         if f[0]:
