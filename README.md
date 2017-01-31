@@ -33,3 +33,10 @@ You can add a .trahstalk in your home for add specific trash path or media path
 	>>> file2 100.10M
 	>>> file3 100M
 	>>> total 205.10M
+
+## TODO
+
+* [ ] more test
+* [ ] add move on remove method
+* [ ] doc sphinx?
+* [ ] uri for path in infotrash?
