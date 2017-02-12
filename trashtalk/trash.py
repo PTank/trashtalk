@@ -1,6 +1,9 @@
 from __future__ import print_function
 from collections import Iterable
-from urllib import parse
+try:
+    from urllib.parse import quote, unquote
+except:
+    from urllib import quote, unquote
 from pathlib import Path
 from datetime import datetime
 from shutil import move
@@ -75,7 +78,7 @@ class Trash():
                         for line in list(i.open())[1:]:
                             try:
                                 list_info_from_file.append(
-                                    parse.unquote(line.split('=')[1].strip()))
+                                    unquote(line.split('=')[1].strip()))
                             except:
                                 list_info_from_file.append("unknow")
                 yield list_info_from_file
@@ -142,7 +145,7 @@ class Trash():
             move(str(old_path.absolute()), str(files) + '/' + name)
             with open(str(info_path.absolute()), "w") as o:
                 o.write('[Trash Info]\n')
-                o.write('Path=%s\n' % parse.quote(str(old_path.absolute())))
+                o.write('Path=%s\n' % quote(str(old_path.absolute())))
                 date = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
                 o.write('DeletionDate=%s\n' % date)
         return error
@@ -168,7 +171,7 @@ class Trash():
                 old_path = i[1].split("Path=")[1][:-1]
                 # move file to old path
                 try:
-                    move(parse.unquote(str(file_path.absolute())), old_path)
+                    move(unquote(str(file_path.absolute())), old_path)
                     file_info.unlink()
                 except Exception as e:
                     error.append(str(e))
