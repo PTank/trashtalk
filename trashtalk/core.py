@@ -4,18 +4,19 @@ Option parser and the main function
 """
 from __future__ import print_function, absolute_import
 import argparse
-from trashtalk.generate_trashs import generate_trashs
 import sys
+from trashtalk.__init__ import __version__
+from trashtalk.generate_trashs import generate_trashs
 from trashtalk.tools import print_files
 
 __all__ = ["trashtalk"]
 
 
 def parse_option(args=None):
+    """ function who parse args """
     parser = argparse.ArgumentParser(
         description="Taking out your trash easily")
     # CLASSIC
-    from trashtalk.__init__ import __version__
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s: ' + __version__)
     parser.add_argument('--verbose', action='store_true')
@@ -64,7 +65,7 @@ def trashtalk():
             options.trash.remove('home')
     if options.a:
         options.am = True
-    trashs , error = generate_trashs(options.u, options.trash, home, options.am)
+    trashs, error = generate_trashs(options.u, options.trash, home, options.am)
     for error in error:
         print(error, file=sys.stderr)
     for trash in trashs:

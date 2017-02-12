@@ -17,7 +17,7 @@ _trashtalk()
 	do
 		var+=" "$val
 	done
-    opts=`python3 -c "from trashtalk import autocomplete; autocomplete('$var')"`
+    opts=`python3 -c "from trashtalk.autocomplete_bash import autocomplete; autocomplete('$var')"`
     #
     #
     #

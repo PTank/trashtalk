@@ -3,6 +3,7 @@
 
 from setuptools import setup, find_packages
 from sys import version_info
+from trashtalk.__init__ import __version__
 
 
 requires = ['pathlib==1.0.1']
@@ -17,7 +18,7 @@ except:
 
 setup(
     name='trashtalk',
-    version="0.0.6.1",
+    version=__version__,
 
     packages=find_packages(),
 

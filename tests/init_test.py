@@ -1,5 +1,5 @@
 import pytest
-from trashtalk import Trash
+from trashtalk.trash import Trash
 
 
 @pytest.fixture()
