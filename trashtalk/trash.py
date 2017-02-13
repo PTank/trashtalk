@@ -35,11 +35,11 @@ class Trash():
             self.name = name
 
     def select_path(self, path, name):
-        """ Add path and name to this Trash
+        """Add path and name to this Trash
 
-            Args:
-                path: path to the trash
-                name: name of this trash
+        Args:
+            path: path to the trash
+            name: name of this trash
         """
         self.path = path
         self.name = name
@@ -119,11 +119,11 @@ class Trash():
     def remove(self, files_path=[]):
         """Move files in list_files to trash and built .trashinfo
 
-           Returns:
-               List of error
+        Returns:
+            List of error
 
-           Raises:
-               WrongFormat: if files_path in args isn't iterable or is str
+        Raises:
+            WrongFormat: if files_path in args isn't iterable or is str
         """
         if type(files_path) == str or not isinstance(files_path, Iterable):
             raise WrongFormat('files_path must be an iterable')
@@ -180,15 +180,15 @@ class Trash():
     def read_trashinfo(self, file_name):
         """Read from file_name.trashinfo in Trash/info
 
-           Args:
-                file_name: obviously name of the file from you want info
+        Args:
+             file_name: obviously name of the file from you want info
 
-           Returns:
-                Tuple : (path, datetime)
+        Returns:
+        nametuple : TrashInfo(path="path", deletion_date="YYYY-mm-DDTHH:MM:SS")
 
-           Example:
-                >>> trash.read_trashinfo("test.txt")
-                ('/path/of/file/test.txt', '2016-12-29T00:37:15')
+        Example:
+             >>> trash.read_trashinfo("test.txt")
+             TrashInfo(path='/path/of/file/test.txt', deletion_date='2016-12-29T00:37:15')
         """
 
     def __iter__(self):
