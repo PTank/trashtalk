@@ -4,12 +4,15 @@ try:
     from urllib.parse import quote, unquote
 except:
     from urllib import quote, unquote
+from collections import namedtuple
 from pathlib import Path
 from datetime import datetime
 from shutil import move
 from trashtalk.exception import WrongFormat
 
 __all__ = ["Trash"]
+
+TrashInfo = namedtuple("TrashInfo", ['path', 'delete_date'])
 
 
 class Trash():
